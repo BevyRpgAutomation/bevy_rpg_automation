@@ -1,0 +1,10 @@
+[package]
+name = "game_main"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bevy = { workspace = true, features = ["bevy_window", "bevy_asset", "x11", "wayland", "bevy_core_pipeline", "tonemapping_luts", "multi_threaded", "track_location"] }
+
+# Performance in debug mode
+log = { workspace = true, features = ["max_level_debug", "release_max_level_warn"] }
