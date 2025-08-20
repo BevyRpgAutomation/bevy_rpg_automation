@@ -1,8 +1,10 @@
 use std::env::current_dir;
+use avian3d::PhysicsPlugins;
 use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use bevy::prelude::*;
 use bevy::window::{PresentMode, WindowMode};
 use bevy::winit::WinitSettings;
+use bevy_skein::SkeinPlugin;
 
 fn main() -> AppExit {
     let mut app = App::new();
@@ -25,6 +27,11 @@ fn main() -> AppExit {
             })
     );
     app.add_plugins(FrameTimeDiagnosticsPlugin::default());
+
+    // Avian
+    app.add_plugins(PhysicsPlugins::default());
+    // Skein
+    app.add_plugins(SkeinPlugin::default());
 
     app.insert_resource(WinitSettings::game());
 

@@ -5,6 +5,8 @@ edition = "2024"
 
 [dependencies]
 bevy = { workspace = true, features = ["bevy_window", "bevy_asset", "x11", "wayland", "bevy_core_pipeline", "tonemapping_luts", "multi_threaded", "track_location"] }
+avian3d = { workspace = true }
+bevy_skein = { workspace = true }
 
 # Performance in debug mode
 log = { workspace = true, features = ["max_level_debug", "release_max_level_warn"] }
