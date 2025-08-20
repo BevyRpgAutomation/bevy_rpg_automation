@@ -1,10 +1,10 @@
-use std::env::current_dir;
 use avian3d::PhysicsPlugins;
 use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use bevy::prelude::*;
 use bevy::window::{PresentMode, WindowMode};
 use bevy::winit::WinitSettings;
 use bevy_skein::SkeinPlugin;
+use std::env::current_dir;
 
 fn main() -> AppExit {
     let mut app = App::new();
@@ -24,7 +24,7 @@ fn main() -> AppExit {
             .set(AssetPlugin {
                 file_path: format!("{}/assets", current_dir().unwrap().to_str().unwrap()),
                 ..default()
-            })
+            }),
     );
     app.add_plugins(FrameTimeDiagnosticsPlugin::default());
 
