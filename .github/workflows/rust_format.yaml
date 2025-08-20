@@ -1,0 +1,27 @@
+name: Rust Code Formatting
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dtolnay/rust-toolchain@nightly
+      - name: Install rustfmt
+        run: rustup component add rustfmt --toolchain nightly
+      - name: Run cargo fmt
+        run: cargo +nightly fmt
+      - uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: Apply rust fmt changes
+          commit_user_name: Rust Fmt Bot
+          commit_author: Rust Fmt <rustfmt@github.de>

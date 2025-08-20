@@ -1,0 +1,34 @@
+name: Rust Dependency Update
+
+on:
+  schedule:
+    - cron: '0 2 * * 0' # Sunday at 2 AM
+  workflow_dispatch:     # Allow manual trigger
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Required for auto-commit to work reliably
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: nightly
+
+      - name: Update Rust dependencies
+        run: cargo update
+
+      - name: Commit updated Cargo.lock
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "chore: Rust dependency update"
+          commit_user_name: Cargo update
+          commit_author: Cargo update <cargoupdate@github.de>
