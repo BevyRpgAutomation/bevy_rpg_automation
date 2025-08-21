@@ -6,7 +6,7 @@ use crate::{
     systems::{camera_follow_player, spawn_camera, switch_between_first_and_third_person},
 };
 
-mod states;
+pub mod states;
 mod systems;
 
 #[derive(Actionlike, PartialEq, Eq, Hash, Clone, Copy, Debug, Reflect)]

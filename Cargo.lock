@@ -2351,6 +2351,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "game_debug_hud"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+ "game_camera",
+]
+
+[[package]]
 name = "game_main"
 version = "0.1.0"
 dependencies = [
@@ -2358,6 +2366,7 @@ dependencies = [
  "bevy",
  "bevy_skein",
  "game_camera",
+ "game_debug_hud",
  "game_player",
  "log",
 ]
