@@ -15,25 +15,45 @@ pub fn spawn_camera(mut commands: Commands) {
 }
 
 pub fn camera_follow_player(
+    window_query: Query<&Window>,
     player_query: Query<&Transform, (With<Player>, Without<Camera3d>)>,
-    mut camera_query: Query<&mut Transform, (With<Camera3d>, Without<Player>)>,
+    mut camera_query: Query<
+        (&Camera, &mut Transform, &GlobalTransform),
+        (With<Camera3d>, Without<Player>),
+    >,
     player_camera_mode: Res<State<PlayerCameraMode>>,
 ) {
     let Ok(player) = player_query.single() else {
         return;
     };
-    let Ok(mut camera) = camera_query.single_mut() else {
+    let Ok(camera) = camera_query.single_mut() else {
+        return;
+    };
+    let (camera, mut camera_transform, camera_global_transform) = camera;
+
+    let window = window_query.single().expect("Exactly one window exists");
+    let Some(cursor_position_in_window) = window.cursor_position() else {
         return;
     };
 
+    camera_transform.translation = player.translation;
+
+    match camera.viewport_to_world(&camera_global_transform, cursor_position_in_window) {
+        Ok(value) => {
+            *camera_transform = camera_transform.looking_at(value.direction.into(), Vec3::Y);
+            println!("value: {:?}", value);
+        }
+        Err(error) => {
+            eprintln!("Failed to convert viewport to world: {}", error);
+        }
+    }
+
     match player_camera_mode.get() {
         PlayerCameraMode::FirstPerson => {
-            camera.translation = player.translation;
-            camera.translation.z -= 10.0;
+            camera_transform.translation.z -= 10.0;
         }
         PlayerCameraMode::ThirdPerson => {
-            camera.translation = player.translation;
-            camera.translation.z += 50.0;
+            camera_transform.translation.z += 50.0;
         }
     }
 }
