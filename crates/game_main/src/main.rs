@@ -4,6 +4,7 @@ use bevy::prelude::*;
 use bevy::window::{PresentMode, WindowMode};
 use bevy::winit::WinitSettings;
 use bevy_skein::SkeinPlugin;
+use game_player::PlayerPlugin;
 use std::env::current_dir;
 
 fn main() -> AppExit {
@@ -27,6 +28,7 @@ fn main() -> AppExit {
             }),
     );
     app.add_plugins(FrameTimeDiagnosticsPlugin::default());
+    app.add_plugins(PlayerPlugin);
 
     // Avian
     app.add_plugins(PhysicsPlugins::default());
