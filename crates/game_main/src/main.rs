@@ -2,13 +2,14 @@ use avian3d::PhysicsPlugins;
 use avian3d::prelude::*;
 use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use bevy::prelude::*;
-use bevy::window::{PresentMode, WindowMode};
+use bevy::window::PresentMode;
 use bevy::winit::WinitSettings;
 use bevy_skein::SkeinPlugin;
 use game_camera::CameraPlugin;
 use game_debug_hud::DebugHudPlugin;
 use game_player::PlayerPlugin;
 use std::env::current_dir;
+use game_action::GameActionPlugin;
 
 fn main() -> AppExit {
     let mut app = App::new();
@@ -31,9 +32,6 @@ fn main() -> AppExit {
             }),
     );
     app.add_plugins(FrameTimeDiagnosticsPlugin::default());
-    app.add_plugins(PlayerPlugin);
-    app.add_plugins(CameraPlugin);
-    app.add_plugins(DebugHudPlugin);
 
     // Avian
     app.add_plugins(PhysicsPlugins::default());
@@ -44,6 +42,14 @@ fn main() -> AppExit {
     app.add_plugins(SkeinPlugin::default());
 
     app.insert_resource(WinitSettings::game());
+
+    // Own plugins
+    app.add_plugins((
+        PlayerPlugin,
+        CameraPlugin,
+        DebugHudPlugin,
+        GameActionPlugin,
+    ));
 
     app.run()
 }
