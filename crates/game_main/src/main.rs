@@ -6,6 +6,7 @@ use bevy::window::{PresentMode, WindowMode};
 use bevy::winit::WinitSettings;
 use bevy_skein::SkeinPlugin;
 use game_camera::CameraPlugin;
+use game_debug_hud::DebugHudPlugin;
 use game_player::PlayerPlugin;
 use std::env::current_dir;
 
@@ -32,6 +33,7 @@ fn main() -> AppExit {
     app.add_plugins(FrameTimeDiagnosticsPlugin::default());
     app.add_plugins(PlayerPlugin);
     app.add_plugins(CameraPlugin);
+    app.add_plugins(DebugHudPlugin);
 
     // Avian
     app.add_plugins(PhysicsPlugins::default());
