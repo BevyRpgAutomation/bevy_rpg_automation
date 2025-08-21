@@ -1,9 +1,9 @@
 [package]
-name = "game_player"
+name = "game_camera"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-avian3d.workspace = true
 bevy.workspace = true
+game_player = { version = "0.1.0", path = "../game_player" }
 leafwing-input-manager = "0.17.1"
