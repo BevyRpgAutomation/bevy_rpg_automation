@@ -10,6 +10,8 @@ bevy_skein = { workspace = true }
 
 # Performance in debug mode
 log = { workspace = true, features = ["max_level_debug", "release_max_level_warn"] }
-game_player = { version = "0.1.0", path = "../game_player" }
-game_camera = { version = "0.1.0", path = "../game_camera" }
-game_debug_hud = { version = "0.1.0", path = "../game_debug_hud" }
+
+game_player = { workspace = true }
+game_camera = { workspace = true }
+game_debug_hud = { workspace = true }
+game_action = { workspace = true }

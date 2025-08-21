@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bevy.workspace = true
-game_player = { version = "0.1.0", path = "../game_player" }
-leafwing-input-manager = "0.17.1"
+bevy = { workspace = true, features = ["bevy_state"] }
+game_player = { workspace = true }
+
+game_action = { workspace = true }

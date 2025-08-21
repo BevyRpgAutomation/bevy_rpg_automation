@@ -1,17 +1,11 @@
 use bevy::prelude::*;
+use game_action::{ActionState, GameAction};
 use game_player::components::Player;
-use leafwing_input_manager::prelude::*;
 
-use crate::{PlayerCameraAction, states::PlayerCameraMode};
+use crate::states::PlayerCameraMode;
 
 pub fn spawn_camera(mut commands: Commands) {
-    commands.spawn((
-        Camera3d::default(),
-        InputMap::new([(
-            PlayerCameraAction::SwitchBetweenFirstAndThirdPerson,
-            KeyCode::KeyV,
-        )]),
-    ));
+    commands.spawn(Camera3d::default());
 }
 
 pub fn camera_follow_player(
@@ -39,14 +33,11 @@ pub fn camera_follow_player(
 }
 
 pub fn switch_between_first_and_third_person(
-    action_query: Query<&ActionState<PlayerCameraAction>, With<Camera>>,
+    action_state: Res<ActionState<GameAction>>,
     current_player_camera_mode: Res<State<PlayerCameraMode>>,
     mut next_player_camera_mode: ResMut<NextState<PlayerCameraMode>>,
 ) {
-    let Ok(action) = action_query.single() else {
-        return;
-    };
-    if !action.just_pressed(&PlayerCameraAction::SwitchBetweenFirstAndThirdPerson) {
+    if !action_state.just_pressed(&GameAction::SwitchBetweenFirstAndThirdPerson) {
         return;
     }
 
