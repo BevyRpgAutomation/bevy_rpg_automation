@@ -1,6 +1,6 @@
 use bevy::prelude::*;
-use leafwing_input_manager::prelude::*;
 pub use leafwing_input_manager::prelude::ActionState;
+use leafwing_input_manager::prelude::*;
 
 pub struct GameActionPlugin;
 
