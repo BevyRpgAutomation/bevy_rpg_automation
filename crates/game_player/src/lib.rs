@@ -3,12 +3,18 @@ use leafwing_input_manager::prelude::*;
 
 use crate::systems::{player_movement, spawn_player};
 
-mod components;
+pub mod components;
 mod systems;
+
+pub const PLAYER_WALK_SPEED: f32 = 15.0;
+pub const PLAYER_JUMP_SPEED: f32 = 20.0;
 
 #[derive(Actionlike, PartialEq, Eq, Hash, Clone, Copy, Debug, Reflect)]
 enum PlayerAction {
-    Run,
+    RunForward,
+    RunLeft,
+    RunRight,
+    RunBackwards,
     Jump,
 }
 
