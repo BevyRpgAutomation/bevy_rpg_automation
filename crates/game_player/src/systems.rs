@@ -1,7 +1,10 @@
 use std::ops::Neg;
 
 use avian3d::prelude::*;
-use bevy::{color::palettes::css::RED, prelude::*};
+use bevy::{
+    color::palettes::css::{GREY, RED},
+    prelude::*,
+};
 use leafwing_input_manager::prelude::*;
 
 use crate::{PLAYER_JUMP_SPEED, PLAYER_WALK_SPEED, PlayerAction, components::Player};
@@ -25,6 +28,11 @@ pub fn spawn_player(
         Collider::cuboid(100.0, 1.0, 100.0),
         Transform::from_xyz(0.0, 0.0, 0.0),
         RigidBody::Static,
+        Mesh3d(meshes.add(Cuboid::new(100.0, 1.0, 100.0))),
+        MeshMaterial3d(materials.add(StandardMaterial {
+            base_color: GREY.into(),
+            ..default()
+        })),
     ));
 
     commands.spawn((
@@ -36,7 +44,7 @@ pub fn spawn_player(
         Mesh3d(meshes.add(Capsule3d::new(2.0, 2.0))),
         MeshMaterial3d(materials.add(StandardMaterial {
             base_color: RED.into(),
-            ..Default::default()
+            ..default()
         })),
         Transform::from_xyz(10.0, 10.0, 10.0),
         LockedAxes::ROTATION_LOCKED,
