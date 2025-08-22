@@ -13,11 +13,6 @@ use crate::{
 pub mod states;
 mod systems;
 
-#[derive(Actionlike, PartialEq, Eq, Hash, Clone, Copy, Debug, Reflect)]
-enum PlayerCameraAction {
-    SwitchBetweenFirstAndThirdPerson,
-}
-
 #[derive(Debug, Resource)]
 struct CameraSettings {
     pub orbit_distance: f32,
