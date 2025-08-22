@@ -1,7 +1,6 @@
 use std::{f32::consts::FRAC_PI_2, ops::Range};
 
 use bevy::prelude::*;
-use leafwing_input_manager::prelude::*;
 
 use crate::{
     states::PlayerCameraMode,
@@ -49,7 +48,6 @@ impl Plugin for CameraPlugin {
     fn build(&self, app: &mut App) {
         app.init_state::<PlayerCameraMode>()
             .insert_resource(CameraSettings::default())
-            .add_plugins(InputManagerPlugin::<PlayerCameraAction>::default())
             .add_systems(Startup, spawn_camera)
             .add_systems(
                 Update,

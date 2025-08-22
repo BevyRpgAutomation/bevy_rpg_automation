@@ -1,27 +1,17 @@
 use std::ops::Neg;
 
 use avian3d::prelude::*;
-use bevy::{
-    color::palettes::css::{GREY, RED},
-    prelude::*,
-};
-use leafwing_input_manager::prelude::*;
+use bevy::color::palettes::css::{GREY, RED};
+use bevy::prelude::*;
+use game_action::{ActionState, GameAction};
 
-use crate::{PLAYER_JUMP_SPEED, PLAYER_WALK_SPEED, PlayerAction, components::Player};
+use crate::{PLAYER_JUMP_SPEED, PLAYER_WALK_SPEED, components::Player};
 
 pub fn spawn_player(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let input_map = InputMap::new([
-        (PlayerAction::Jump, KeyCode::Space),
-        (PlayerAction::RunForward, KeyCode::KeyW),
-        (PlayerAction::RunLeft, KeyCode::KeyA),
-        (PlayerAction::RunRight, KeyCode::KeyD),
-        (PlayerAction::RunBackwards, KeyCode::KeyS),
-    ]);
-
     // TODO: move to world module/plugin
     // ground
     commands.spawn((
@@ -37,7 +27,6 @@ pub fn spawn_player(
 
     commands.spawn((
         Player,
-        input_map,
         Collider::capsule(2.0, 2.0),
         RigidBody::Dynamic,
         LinearVelocity::ZERO,
@@ -53,30 +42,26 @@ pub fn spawn_player(
 }
 
 pub fn player_movement(
-    action_query: Query<&ActionState<PlayerAction>, With<Player>>,
+    action_state: Res<ActionState<GameAction>>,
     mut player_query: Query<&mut LinearVelocity, With<Player>>,
 ) {
-    let Ok(action_state) = action_query.single() else {
-        return;
-    };
-
     let Ok(mut player) = player_query.single_mut() else {
         return;
     };
 
-    if action_state.just_pressed(&PlayerAction::Jump) {
+    if action_state.just_pressed(&GameAction::Jump) {
         player.y = PLAYER_JUMP_SPEED;
     }
-    if action_state.pressed(&PlayerAction::RunForward) {
+    if action_state.pressed(&GameAction::RunForward) {
         player.z = PLAYER_WALK_SPEED.neg();
     }
-    if action_state.pressed(&PlayerAction::RunBackwards) {
+    if action_state.pressed(&GameAction::RunBackwards) {
         player.z = PLAYER_WALK_SPEED;
     }
-    if action_state.pressed(&PlayerAction::RunLeft) {
+    if action_state.pressed(&GameAction::RunLeft) {
         player.x = PLAYER_WALK_SPEED.neg();
     }
-    if action_state.pressed(&PlayerAction::RunRight) {
+    if action_state.pressed(&GameAction::RunRight) {
         player.x = PLAYER_WALK_SPEED;
     }
 }
